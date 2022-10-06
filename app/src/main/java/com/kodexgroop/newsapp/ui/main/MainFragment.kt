@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.main
+package com.kodexgroop.nawsapp.ui.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

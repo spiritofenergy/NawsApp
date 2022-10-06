@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.favorite
+package com.kodexgroop.nawsapp.ui.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.nawsapp.R
 import com.example.nawsapp.databinding.FragmentDetailsBinding
-import com.example.nawsapp.databinding.FragmentFavoriteBinding
 
 
-class FavoriteFragment : Fragment() {
-    private var _binding: FragmentFavoriteBinding? = null
+class DetailsFragment : Fragment() {
+    private var _binding: FragmentDetailsBinding? = null
     private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
         return mBinding.root
     }
 }
