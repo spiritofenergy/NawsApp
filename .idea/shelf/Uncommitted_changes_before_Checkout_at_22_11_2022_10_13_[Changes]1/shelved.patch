@@ -1,0 +1,671 @@
+Index: app/src/main/java/com/kodexgroop/newsapp/modals/NewsResponse.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/modals/NewsResponse.kt b/app/src/main/java/com/kodexgroop/newsapp/modals/NewsResponse.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/kodexgroop/newsapp/modals/NewsResponse.kt	
++++ /dev/null	
+@@ -1,7 +0,0 @@
+-package com.kodexgroop.nawsapp.modals
+-
+-data class NewsResponse(
+-    val articles: List<Article>,
+-    val status: String,
+-    val totalResults: Int
+-)
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/modals/Source.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/modals/Source.kt b/app/src/main/java/com/kodexgroop/newsapp/modals/Source.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/kodexgroop/newsapp/modals/Source.kt	
++++ /dev/null	
+@@ -1,6 +0,0 @@
+-package com.kodexgroop.nawsapp.modals
+-
+-data class Source(
+-    val id: String,
+-    val name: String
+-)
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/modals/Article.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/modals/Article.kt b/app/src/main/java/com/kodexgroop/newsapp/modals/Article.kt
+deleted file mode 100644
+--- a/app/src/main/java/com/kodexgroop/newsapp/modals/Article.kt	
++++ /dev/null	
+@@ -1,12 +0,0 @@
+-package com.kodexgroop.nawsapp.modals
+-
+-data class Article(
+-    val author: String,
+-    val content: String,
+-    val description: String,
+-    val publishedAt: String,
+-    val source: Source,
+-    val title: String,
+-    val url: String,
+-    val urlToImage: String
+-)
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/main/MainViewModel.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainViewModel.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainViewModel.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainViewModel.kt	
+@@ -0,0 +1,10 @@
++package com.kodexgroop.newsapp.ui.main
++
++import androidx.lifecycle.ViewModel
++import dagger.hilt.android.lifecycle.HiltViewModel
++import javax.inject.Inject
++
++@HiltViewModel
++class MainViewModel @Inject constructor(): ViewModel() {
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/adapters/NewsAdapter.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/adapters/NewsAdapter.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/adapters/NewsAdapter.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/adapters/NewsAdapter.kt	
+@@ -0,0 +1,37 @@
++package com.kodexgroop.newsapp.ui.adapters
++
++import android.view.View
++import android.view.ViewGroup
++import androidx.recyclerview.widget.AsyncListDiffer
++import androidx.recyclerview.widget.DiffUtil
++import androidx.recyclerview.widget.RecyclerView
++import com.kodexgroop.newsapp.models.Article
++
++class NewsAdapter: RecyclerView. Adapter<NewsAdapter.NewsViewHolder>() {
++
++    inner class NewsViewHolder(view: View): RecyclerView.ViewHolder(view)
++
++    private val callback = object : DiffUtil.ItemCallback<Article>(){
++        override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
++            return oldItem.url == newItem.url
++        }
++
++        override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
++            return oldItem == newItem
++        }
++
++    }
++
++    val differ = AsyncListDiffer(this, callback)
++    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
++        TODO("Not yet implemented")
++    }
++
++    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
++        TODO("Not yet implemented")
++    }
++
++    override fun getItemCount(): Int {
++        TODO("Not yet implemented")
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDatabase.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDatabase.kt b/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDatabase.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDatabase.kt	
+@@ -0,0 +1,30 @@
++package com.kodexgroop.newsapp.data.db
++
++import android.content.Context
++import androidx.room.Room
++import androidx.room.RoomDatabase
++
++abstract class ArticleDatabase: RoomDatabase() {
++
++    abstract fun getArticleDao(): ArticleDao
++
++    companion object {
++        @Volatile
++        private var instance: ArticleDatabase? = null
++        private var LOCK = Any()
++
++        operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
++            instance ?: createDatabase(context).also { instance = it }
++
++        }
++        private fun createDatabase(context: Context): ArticleDatabase {
++            return Room.databaseBuilder(
++                context.applicationContext,
++                ArticleDatabase::class.java,
++                "article_database",
++            ).build()
++        }
++    }
++}
++
++
+Index: .idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/deploymentTargetDropDown.xml	
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="deploymentTargetDropDown">
++    <targetSelectedWithDropDown>
++      <Target>
++        <type value="QUICK_BOOT_TARGET" />
++        <deviceKey>
++          <Key>
++            <type value="VIRTUAL_DEVICE_PATH" />
++            <value value="C:\Users\Boss Travel\.android\avd\Pixel_4_API_30.avd" />
++          </Key>
++        </deviceKey>
++      </Target>
++    </targetSelectedWithDropDown>
++    <timeTargetWasSelectedWithDropDown value="2022-10-09T08:35:50.528768500Z" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/values/ids.xml
+===================================================================
+diff --git a/app/src/main/res/values/ids.xml b/app/src/main/res/values/ids.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/values/ids.xml	
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="utf-8"?>
++<resources>
++    <item name="popular_news_text" type="id">PopularNews</item>
++</resources>
+\ No newline at end of file
+Index: app/src/main/res/drawable/ic_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_home.xml b/app/src/main/res/drawable/ic_home.xml
+--- a/app/src/main/res/drawable/ic_home.xml	
++++ b/app/src/main/res/drawable/ic_home.xml	
+@@ -1,0 +1,5 @@
++<vector android:height="24dp" android:tint="#000000"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M10,20v-6h4v6h5v-8h3L12,3 2,12h3v8z"/>
++</vector>
+Index: app/src/main/res/drawable/ic_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/ic_search.xml b/app/src/main/res/drawable/ic_search.xml
+--- a/app/src/main/res/drawable/ic_search.xml	
++++ b/app/src/main/res/drawable/ic_search.xml	
+@@ -1,0 +1,5 @@
++<vector android:height="24dp" android:tint="#000000"
++    android:viewportHeight="24" android:viewportWidth="24"
++    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
++    <path android:fillColor="@android:color/white" android:pathData="M15.5,14h-0.79l-0.28,-0.27C15.41,12.59 16,11.11 16,9.5 16,5.91 13.09,3 9.5,3S3,5.91 3,9.5 5.91,16 9.5,16c1.61,0 3.09,-0.59 4.23,-1.57l0.27,0.28v0.79l5,4.99L20.49,19l-4.99,-5zM9.5,14C7.01,14 5,11.99 5,9.5S7.01,5 9.5,5 14,7.01 14,9.5 11.99,14 9.5,14z"/>
++</vector>
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/vcs.xml	
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	
++++ b/.idea/.gitignore	
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+Index: .idea/gradle.xml
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/gradle.xml	
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
++  <component name="GradleSettings">
++    <option name="linkedExternalProjectsSettings">
++      <GradleProjectSettings>
++        <option name="testRunner" value="GRADLE" />
++        <option name="distributionType" value="DEFAULT_WRAPPED" />
++        <option name="externalProjectPath" value="$PROJECT_DIR$" />
++        <option name="modules">
++          <set>
++            <option value="$PROJECT_DIR$" />
++            <option value="$PROJECT_DIR$/app" />
++          </set>
++        </option>
++      </GradleProjectSettings>
++    </option>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/compiler.xml
+===================================================================
+diff --git a/.idea/compiler.xml b/.idea/compiler.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/compiler.xml	
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CompilerConfiguration">
++    <bytecodeTargetLevel target="11" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_details.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_details.xml b/app/src/main/res/layout/fragment_details.xml
+--- a/app/src/main/res/layout/fragment_details.xml	
++++ b/app/src/main/res/layout/fragment_details.xml	
+@@ -1,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="com.kodexgroop.newsapp.ui.details.DetailsFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_favorite.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_favorite.xml b/app/src/main/res/layout/fragment_favorite.xml
+--- a/app/src/main/res/layout/fragment_favorite.xml	
++++ b/app/src/main/res/layout/fragment_favorite.xml	
+@@ -1,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="com.kodexgroop.newsapp.ui.favorite.FavoriteFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_main.xml b/app/src/main/res/layout/fragment_main.xml
+--- a/app/src/main/res/layout/fragment_main.xml	
++++ b/app/src/main/res/layout/fragment_main.xml	
+@@ -1,0 +1,57 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    tools:context="com.kodexgroop.newsapp.ui.main.MainFragment">
++
++
++    <TextView
++        android:id="@+id/title_text"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="@string/app_name"
++        android:textColor="@color/grayBlack"
++        android:textSize="40sp"
++        android:fontFamily="@font/arialroundedmtbold"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"/>
++    <TextView
++        android:id="@id/popular_news_text"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="42dp"
++        android:layout_marginHorizontal="15dp"
++        android:text="@string/popular_news"
++        android:textColor="@color/grayBlack"
++        android:textSize="16sp"
++        app:layout_constraintTop_toBottomOf="@+id/title_text"
++        app:layout_constraintStart_toStartOf="parent"/>
++
++    <androidx.recyclerview.widget.RecyclerView
++
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        tools:ignore="MissingConstraints"
++        android:layout_marginTop="12dp"
++        app:layout_constraintTop_toBottomOf="@+id/popular_news_text"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.5"/>
++
++    <ProgressBar
++        android:id="@+id/pag_progress_bar"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        style="?attr/progressBarStyle"
++        android:visibility="invisible"
++        android:background="@android:color/transparent"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.5"
++        tools:ignore="MissingConstraints" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/navigation/nav_graph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/nav_graph.xml b/app/src/main/res/navigation/nav_graph.xml
+--- a/app/src/main/res/navigation/nav_graph.xml	
++++ b/app/src/main/res/navigation/nav_graph.xml	
+@@ -1,0 +1,52 @@
++<?xml version="1.0" encoding="utf-8"?>
++<navigation xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:id="@+id/nav_graph"
++    app:startDestination="@id/mainFragment">
++
++    <fragment
++        android:id="@+id/mainFragment"
++        android:name="com.kodexgroop.newsapp.ui.main.MainFragment"
++        android:label="fragment_main"
++        tools:layout="@layout/fragment_main" >
++        <action
++            android:id="@+id/action_mainFragment_to_detailsFragment"
++            app:destination="@id/detailsFragment"
++            app:enterAnim="@android:anim/slide_out_right"
++            app:exitAnim="@android:anim/slide_out_right"
++            app:popEnterAnim="@android:anim/slide_in_left"
++            app:popExitAnim="@android:anim/slide_out_right"/>
++    </fragment>
++    <fragment
++        android:id="@+id/detailsFragment"
++        android:name="com.kodexgroop.newsapp.ui.details.DetailsFragment"
++        android:label="fragment_details"
++        tools:layout="@layout/fragment_details" />
++    <fragment
++        android:id="@+id/favoriteFragment"
++        android:name="com.kodexgroop.newsapp.ui.favorite.FavoriteFragment"
++        android:label="fragment_favorite"
++        tools:layout="@layout/fragment_favorite" >
++        <action
++            android:id="@+id/action_favoriteFragment_to_detailsFragment"
++            app:destination="@id/detailsFragment"
++            app:enterAnim="@android:anim/slide_out_right"
++            app:exitAnim="@android:anim/slide_out_right"
++            app:popEnterAnim="@android:anim/slide_in_left"
++            app:popExitAnim="@android:anim/slide_out_right"/>
++    </fragment>
++    <fragment
++        android:id="@+id/searchFragment"
++        android:name="com.kodexgroop.newsapp.ui.search.SearchFragment"
++        android:label="fragment_search"
++        tools:layout="@layout/fragment_search" >
++        <action
++            android:id="@+id/action_searchFragment_to_detailsFragment"
++            app:destination="@id/detailsFragment"
++            app:enterAnim="@android:anim/slide_out_right"
++            app:exitAnim="@android:anim/slide_out_right"
++            app:popEnterAnim="@android:anim/slide_in_left"
++            app:popExitAnim="@android:anim/slide_out_right" />
++    </fragment>
++</navigation>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_splash.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_splash.xml b/app/src/main/res/layout/fragment_splash.xml
+--- a/app/src/main/res/layout/fragment_splash.xml	
++++ b/app/src/main/res/layout/fragment_splash.xml	
+@@ -1,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:background="@color/teal"
++    tools:context="com.kodexgroop.newsapp.ui.splash.SplashFragment">
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="@string/app_name"
++        android:textColor="@color/white"
++        android:textSize="64sp"
++        android:fontFamily="@font/arialroundedmtbold"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.495"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/res/menu/bottom_nav_menu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/menu/bottom_nav_menu.xml b/app/src/main/res/menu/bottom_nav_menu.xml
+--- a/app/src/main/res/menu/bottom_nav_menu.xml	
++++ b/app/src/main/res/menu/bottom_nav_menu.xml	
+@@ -1,0 +1,16 @@
++<?xml version="1.0" encoding="utf-8"?>
++<menu xmlns:android="http://schemas.android.com/apk/res/android">
++<item
++    android:id="@+id/mainFragment"
++    android:title=""
++    android:icon="@drawable/ic_home"/>
++    <item
++    android:id="@+id/searchFragment"
++    android:title=""
++    android:icon="@drawable/ic_search"/>
++    <item
++    android:id="@+id/favoriteFragment"
++    android:title=""
++    android:icon="@drawable/ic_favorite"/>
++
++</menu>
+\ No newline at end of file
+Index: .idea/misc.xml
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	
++++ b/.idea/misc.xml	
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ExternalStorageConfigurationManager" enabled="true" />
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/build/classes" />
++  </component>
++  <component name="ProjectType">
++    <option name="id" value="Android" />
++  </component>
++</project>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_search.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_search.xml b/app/src/main/res/layout/fragment_search.xml
+--- a/app/src/main/res/layout/fragment_search.xml	
++++ b/app/src/main/res/layout/fragment_search.xml	
+@@ -1,0 +1,14 @@
++<?xml version="1.0" encoding="utf-8"?>
++<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context="com.kodexgroop.newsapp.ui.search.SearchFragment">
++
++    <!-- TODO: Update blank fragment layout -->
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        android:text="@string/hello_blank_fragment" />
++
++</FrameLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/data/api/TestRepo.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/data/api/TestRepo.kt b/app/src/main/java/com/kodexgroop/newsapp/data/api/TestRepo.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/data/api/TestRepo.kt	
+@@ -0,0 +1,7 @@
++package com.kodexgroop.newsapp.data.api
++
++ import javax.inject.Inject
++
++class TestRepo @Inject constructor(private val  newsService: NewsService) {
++    suspend fun getAll() = newsService.getHeadlines()
++}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDao.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDao.kt b/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDao.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/data/db/ArticleDao.kt	
+@@ -0,0 +1,21 @@
++package com.kodexgroop.newsapp.data.db
++
++import androidx.lifecycle.LiveData
++import androidx.room.Delete
++import androidx.room.Insert
++import androidx.room.OnConflictStrategy
++import androidx.room.Query
++import com.kodexgroop.newsapp.models.Article
++
++interface ArticleDao {
++
++    @Query("SELECT * FROM articles")
++     suspend fun getArticles(): LiveData<List<Article>>
++
++    @Insert(onConflict = OnConflictStrategy.REPLACE)
++     suspend fun insert(article: Article)
++
++     @Delete
++     suspend fun delete(article: Article)
++}
++
+Index: app/src/main/java/com/kodexgroop/newsapp/models/NewsResponse.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/models/NewsResponse.kt b/app/src/main/java/com/kodexgroop/newsapp/models/NewsResponse.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/models/NewsResponse.kt	
+@@ -0,0 +1,7 @@
++package com.kodexgroop.newsapp.models
++
++data class NewsResponse(
++    val articles: List<Article>,
++    val status: String,
++    val totalResults: Int
++)
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/di/NewsApp.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/di/NewsApp.kt b/app/src/main/java/com/kodexgroop/newsapp/di/NewsApp.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/di/NewsApp.kt	
+@@ -0,0 +1,9 @@
++package com.kodexgroop.newsapp.di
++
++import android.app.Application
++import dagger.hilt.android.HiltAndroidApp
++
++@HiltAndroidApp
++class NewsApp: Application() {
++
++}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/models/Source.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/models/Source.kt b/app/src/main/java/com/kodexgroop/newsapp/models/Source.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/models/Source.kt	
+@@ -0,0 +1,6 @@
++package com.kodexgroop.newsapp.models
++
++data class Source(
++    val id: Any,
++    val name: String
++)
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/models/Article.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/models/Article.kt b/app/src/main/java/com/kodexgroop/newsapp/models/Article.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/kodexgroop/newsapp/models/Article.kt	
+@@ -0,0 +1,17 @@
++package com.kodexgroop.newsapp.models
++
++import androidx.room.Entity
++import androidx.room.PrimaryKey
++
++@Entity(tableName = "articles")
++data class Article(
++    @PrimaryKey(autoGenerate = true)
++    val id : Int? = null,
++    val content: String,
++    val description: String,
++    val publishedAt: String,
++    val source: Source,
++    val title: String,
++    val url: String,
++    val urlToImage: String
++)
+\ No newline at end of file

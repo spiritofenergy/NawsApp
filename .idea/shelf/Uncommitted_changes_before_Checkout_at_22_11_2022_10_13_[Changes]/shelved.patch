@@ -1,0 +1,275 @@
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/search/SearchFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.ui.search\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.example.nawsapp.R\r\n\r\nclass SearchFragment : Fragment() {\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_search, container, false)\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/search/SearchFragment.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/search/SearchFragment.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/ui/search/SearchFragment.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/search/SearchFragment.kt	
+@@ -1,4 +1,4 @@
+-package com.kodexgroop.nawsapp.ui.search
++package com.kodexgroop.newsapp.ui.search
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/details/DetailsFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.ui.details\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.example.nawsapp.R\r\nimport com.example.nawsapp.databinding.FragmentDetailsBinding\r\n\r\n\r\nclass DetailsFragment : Fragment() {\r\n    private var _binding: FragmentDetailsBinding? = null\r\n    private val mBinding get() = _binding!!\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)\r\n        return mBinding.root\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/details/DetailsFragment.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/details/DetailsFragment.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/ui/details/DetailsFragment.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/details/DetailsFragment.kt	
+@@ -1,11 +1,10 @@
+-package com.kodexgroop.nawsapp.ui.details
++package com.kodexgroop.newsapp.ui.details
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import com.example.nawsapp.R
+ import com.example.nawsapp.databinding.FragmentDetailsBinding
+ 
+ 
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/favorite/FavoriteFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.ui.favorite\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.example.nawsapp.R\r\nimport com.example.nawsapp.databinding.FragmentDetailsBinding\r\nimport com.example.nawsapp.databinding.FragmentFavoriteBinding\r\n\r\n\r\nclass FavoriteFragment : Fragment() {\r\n    private var _binding: FragmentFavoriteBinding? = null\r\n    private val mBinding get() = _binding!!\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        _binding = FragmentFavoriteBinding.inflate(layoutInflater, container, false)\r\n        return mBinding.root\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/favorite/FavoriteFragment.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/favorite/FavoriteFragment.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/ui/favorite/FavoriteFragment.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/favorite/FavoriteFragment.kt	
+@@ -1,12 +1,10 @@
+-package com.kodexgroop.nawsapp.ui.favorite
++package com.kodexgroop.newsapp.ui.favorite
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import com.example.nawsapp.R
+-import com.example.nawsapp.databinding.FragmentDetailsBinding
+ import com.example.nawsapp.databinding.FragmentFavoriteBinding
+ 
+ 
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/main/MainFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.ui.main\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.example.nawsapp.R\r\nimport com.example.nawsapp.databinding.FragmentDetailsBinding\r\nimport com.example.nawsapp.databinding.FragmentMainBinding\r\n\r\nclass MainFragment : Fragment() {\r\n    private var _binding: FragmentMainBinding? = null\r\n    private val mBinding get() = _binding!!\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)\r\n        return mBinding.root\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainFragment.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainFragment.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainFragment.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/main/MainFragment.kt	
+@@ -1,23 +1,90 @@
+-package com.kodexgroop.nawsapp.ui.main
++package com.kodexgroop.newsapp.ui.main
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import com.example.nawsapp.R
+-import com.example.nawsapp.databinding.FragmentDetailsBinding
++import androidx.fragment.app.viewModels
+ import com.example.nawsapp.databinding.FragmentMainBinding
++ import dagger.hilt.android.AndroidEntryPoint
+ 
++@AndroidEntryPoint
+ class MainFragment : Fragment() {
+     private var _binding: FragmentMainBinding? = null
+     private val mBinding get() = _binding!!
+ 
++    private val viewModel by viewModels<MainViewModel>()
++
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+-    ): View? {
++    ): View {
+         _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+         return mBinding.root
+     }
+-}
+\ No newline at end of file
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++    }
++}
++//
++//@AndroidEntryPoint
++//class MainFragment : Fragment() {
++//
++//    private var _binding: FragmentMainBinding? = null
++//    private val mBinding get() = _binding!!
++//
++//    private val viewModel by viewModels<MainViewModel>()
++//    lateinit var newsAdapter: NewsAdapter
++//
++//    override fun onCreateView(
++//        inflater: LayoutInflater, container: ViewGroup?,
++//        savedInstanceState: Bundle?
++//    ): View {
++//        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
++//        return mBinding.root
++//    }
++//
++//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++//        super.onViewCreated(view, savedInstanceState)
++//        initAdapter()
++//
++//        newsAdapter.setOnItemClickListener {
++//            val bundle = bundleOf("article" to it)
++//            view.findNavController().navigate(
++//                R.id.action_mainFragment_to_detailsFragment,
++//                bundle
++//            )
++//        }
++//
++//        viewModel.newsLiveData.observe(viewLifecycleOwner) { responce ->
++//            when (responce) {
++//                is Resource.Success -> {
++//                    pag_progress_bar.visibility = View.INVISIBLE
++//                    responce.data?.let {
++//                        newsAdapter.differ.submitList(it.articles)
++//                    }
++//                }
++//                is Resource.Error -> {
++//                    pag_progress_bar.visibility = View.INVISIBLE
++//                    responce.data?.let {
++//                        Log.e("checkData", "MainFragment: Error: $it")
++//                    }
++//                }
++//                is Resource.Loading -> {
++//                    pag_progress_bar.visibility = View.VISIBLE
++//                }
++//            }
++//        }
++//    }
++//
++//    private fun initAdapter() {
++//        newsAdapter = NewsAdapter()
++//        news_adapter.apply {
++//            adapter = newsAdapter
++//            layoutManager = LinearLayoutManager(activity)
++//        }
++//    }
++//}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/ui/splash/SplashFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.ui.splash\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.example.nawsapp.R\r\n\r\nclass SplashFragment : Fragment() {\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        return inflater.inflate(R.layout.fragment_splash, container, false)\r\n    }\r\n\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/ui/splash/SplashFragment.kt b/app/src/main/java/com/kodexgroop/newsapp/ui/splash/SplashFragment.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/ui/splash/SplashFragment.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/ui/splash/SplashFragment.kt	
+@@ -1,4 +1,4 @@
+-package com.kodexgroop.nawsapp.ui.splash
++package com.kodexgroop.newsapp.ui.splash
+ 
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+Index: app/src/main/java/com/kodexgroop/newsapp/data/api/NewsServise.kt
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/data/api/NewsServise.kt b/app/src/main/java/com/kodexgroop/newsapp/data/api/NewsServise.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/data/api/NewsServise.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/data/api/NewsServise.kt	
+@@ -1,0 +1,24 @@
++package com.kodexgroop.newsapp.data.api
++
++import com.kodexgroop.newsapp.models.NewsResponse
++import com.kodexgroop.newsapp.utils.Constants.Companion.API_KEY
++import retrofit2.Response
++import retrofit2.http.GET
++import retrofit2.http.Query
++
++interface NewsService {
++
++@GET("/v2/everything")
++suspend fun getEverything(
++    @Query("q") query: String,
++    @Query("page") page: Int = 1,
++    @Query("apiKey") apiKey: String = API_KEY
++): Response<NewsResponse>
++
++@GET("/v2/top-headlines")
++suspend fun getHeadlines(
++    @Query("country") countryCode: String = "ru",
++    @Query("page") page: Int = 1,
++    @Query("apiKey") apiKey: String = API_KEY
++): Response<NewsResponse>
++}
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/di/AppModule.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.newsapp.di\r\n\r\nobject AppModule {\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/di/AppModule.kt b/app/src/main/java/com/kodexgroop/newsapp/di/AppModule.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/di/AppModule.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/di/AppModule.kt	
+@@ -1,4 +1,38 @@
+ package com.kodexgroop.newsapp.di
+ 
++import com.kodexgroop.newsapp.data.api.NewsService
++import com.kodexgroop.newsapp.utils.Constants.Companion.BASE_URL
++import dagger.Module
++import dagger.Provides
++import dagger.hilt.InstallIn
++import dagger.hilt.components.SingletonComponent
++import okhttp3.OkHttpClient
++import okhttp3.logging.HttpLoggingInterceptor
++import retrofit2.Retrofit
++import retrofit2.converter.gson.GsonConverterFactory
++import javax.inject.Singleton
++
++@Module
++@InstallIn(SingletonComponent::class)
+ object AppModule {
++    @Provides
++    fun baseUrl() = BASE_URL
++
++    @Provides
++    fun logging() = HttpLoggingInterceptor()
++        .setLevel(HttpLoggingInterceptor.Level.BODY)
++    @Provides
++    fun okHttpClient() = OkHttpClient.Builder()
++        .addInterceptor (logging())
++        .build()
++
++    @Provides
++    @Singleton
++    fun provideRetrofit(baseUrl: String): NewsService =
++        Retrofit.Builder()
++            .baseUrl(baseUrl)
++            .addConverterFactory(GsonConverterFactory.create())
++            .client(OkHttpClient())
++            .build()
++            .create(NewsService::class.java)
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/kodexgroop/newsapp/utils/Constants.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.kodexgroop.nawsapp.utils\r\n\r\nclass Constants {\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/kodexgroop/newsapp/utils/Constants.kt b/app/src/main/java/com/kodexgroop/newsapp/utils/Constants.kt
+--- a/app/src/main/java/com/kodexgroop/newsapp/utils/Constants.kt	
++++ b/app/src/main/java/com/kodexgroop/newsapp/utils/Constants.kt	
+@@ -1,4 +1,8 @@
+-package com.kodexgroop.nawsapp.utils
++package com.kodexgroop.newsapp.utils
+ 
+ class Constants {
++    companion object {
++            const val BASE_URL = "https://newsapi.org/"
++            const val API_KEY = "388a745878d14ed9ba826118f2fb160f"
++     }
+ }
+\ No newline at end of file
