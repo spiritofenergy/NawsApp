@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.main
+package com.kodexgroop.ui.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,17 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.nawsapp.R
 import com.example.nawsapp.databinding.FragmentDetailsBinding
-import com.example.nawsapp.databinding.FragmentMainBinding
 
-class MainFragment : Fragment() {
-    private var _binding: FragmentMainBinding? = null
+
+class DetailsFragment : Fragment() {
+    private var _binding: FragmentDetailsBinding? = null
     private val mBinding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
         return mBinding.root
     }
 }

@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.splash
+package com.kodexgroop.ui.splash
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

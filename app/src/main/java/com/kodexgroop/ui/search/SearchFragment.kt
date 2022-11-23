@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.search
+package com.kodexgroop.ui.search
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -1,6 +1,5 @@
 package com.kodexgroop.utils
 
-import com.example.nawsapp.R
 
 class Constants {
 

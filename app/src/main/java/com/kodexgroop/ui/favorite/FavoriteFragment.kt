@@ -1,4 +1,4 @@
-package com.example.nawsapp.ui.favorite
+package com.kodexgroop.ui.favorite
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
